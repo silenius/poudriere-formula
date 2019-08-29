@@ -1,3 +1,4 @@
+# vim: syntax=yaml
 # Create optional make.conf
 #   You can also specify a global make.conf which will be used for all the
 #   jails.  Any of the following are allowed and will all be used in the
