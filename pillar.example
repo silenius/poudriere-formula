@@ -1,0 +1,82 @@
+# Create optional make.conf
+#   You can also specify a global make.conf which will be used for all the
+#   jails.  Any of the following are allowed and will all be used in the
+#   order shown:
+#
+#         /usr/local/etc/poudriere.d/make.conf
+#         /usr/local/etc/poudriere.d/<setname>-make.conf
+#         /usr/local/etc/poudriere.d/<tree>-make.conf
+#         /usr/local/etc/poudriere.d/<jailname>-make.conf
+#         /usr/local/etc/poudriere.d/<tree>-<setname>-make.conf
+#         /usr/local/etc/poudriere.d/<jailname>-<tree>-make.conf
+#         /usr/local/etc/poudriere.d/<jailname>-<setname>-make.conf
+#         /usr/local/etc/poudriere.d/<jailname>-<tree>-<setname>-make.conf
+#         /usr/local/etc/poudriere.d/hooks/plugins/<plugin>/make.conf
+
+poudriere:
+  conf: salt://poudriere/files/poudriere.conf
+  make_conf:
+    
+    ###########
+    # DEFAULT #
+    ###########
+
+    make.conf: |
+      OPTIONS_SET+= CURL MANPAGES UTF8 ZSH ZSTD ZLIB ICONV UNICODE NCURSES
+      OPTIONS_UNSET+= NLS HAL PULSEAUDIO DEBUG TEST
+      DEFAULT_VERSIONS+= ssl=base
+
+    ###############################
+    # SETS (server, desktop, etc) #
+    ###############################
+
+    # -z server
+    server-make.conf: |
+      DEFAULT_VERSIONS+= pgsql=11
+      OPTIONS_UNSET+= DTRACE IPV6 EXAMPLES CUPS DOCS FONTCONFIG NLS X11 GTK2 GTK3 QT4 QT5 DOXYGEN
+
+    # -z serverpg96
+    serverpg96-make.conf: |
+      DEFAULT_VERSIONS+= pgsql=9.6
+      OPTIONS_UNSET+= DTRACE IPV6 EXAMPLES CUPS DOCS FONTCONFIG NLS X11 GTK2 GTK3 QT4 QT5 DOXYGEN
+
+    ############################################
+    # PORTS TREES (head, branches/2019Q1, etc) #
+    ############################################
+   
+    head-make.conf: |
+      DEFAULT_VERSIONS+= pgsql=11 python=2.7 python2=2.7 python3=3.6 php=7.3
+    b_2019Q1-make.conf: |
+      DEFAULT_VERSIONS+= python=2.7 python2=2.7 python3=3.6 php=7.2
+    b_2019Q2-make.conf: |
+      DEFAULT_VERSIONS+= ruby=2.5 python=2.7 python2=2.7 python3=3.6 php=7.2
+    b_2019Q3-make.conf: |
+      DEFAULT_VERSIONS+= ruby=2.5 python=2.7 python2=2.7 python3=3.6 php=7.2
+
+    #########
+    # JAILS #
+    #########
+
+    10_3amd64-make.conf: |
+      ALLOW_UNSUPPORTED_SYSTEM=YES
+    10_4amd64-make.conf: |
+      ALLOW_UNSUPPORTED_SYSTEM=YES
+  jails:
+    - label: 12_0amd64
+      version: 12.0-RELEASE
+    - label: 11_2amd64
+      version: 11.2-RELEASE
+    - label: 10_4amd64
+      version: 10.4-RELEASE
+  ports:
+    - label: head
+      method: svn
+    - label: b_2019Q1
+      branch: branches/2019Q1
+      method: svn
+    - label: b_2019Q2
+      branch: branches/2019Q2
+      method: svn
+    - label: b_2019Q3
+      branch: branches/2019Q3
+      method: svn
