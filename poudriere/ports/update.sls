@@ -16,3 +16,4 @@ poudriere_update_port_{{ port.label }}:
       - file: poudriere_conf
       - cmd: poudriere_port_{{ port.label }}
 {% endif %}
+{% endfor %}
