@@ -9,7 +9,7 @@ include:
 poudriere_update_port_{{ port.label }}:
   cmd.run:
     - name: poudriere ports -u -p {{ port.label }}
-    - onlyif: poudriere ports -lnq | grep -E '^{{ port.label }}' 
+    - onlyif: poudriere ports -lnq | grep -qE '^{{ port.label }}' 
     - shell: /bin/sh
     - require:
       - file: poudriere_conf
