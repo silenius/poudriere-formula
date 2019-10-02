@@ -15,7 +15,7 @@ poudriere_conf:
 poudriere_pkglist:
   file.recurse:
     - name: /usr/local/etc/poudriere.d/pkglist
-    - source: salt://poudriere/files/pkglist
+    - source: {{ poudriere.pkg_list }}
     - dir_mode: 755
     - file_mode: 644
     - user: root

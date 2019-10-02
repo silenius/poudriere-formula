@@ -16,6 +16,7 @@
 
 poudriere:
   conf: salt://poudriere/files/poudriere.conf
+  pkg_list: salt://poudriere/pkglist
   make_conf:
     
     ###########
