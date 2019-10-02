@@ -1,7 +1,6 @@
 include
   - poudriere.install
   - poudriere.config
-  - poudriere.ports
 
 {% set poudriere = salt.pillar.get('poudriere') %}
 
@@ -14,6 +13,5 @@ poudriere_update_port_{{ port.label }}:
     - shell: /bin/sh
     - require:
       - file: poudriere_conf
-      - cmd: poudriere_port_{{ port.label }}
 {% endif %}
 {% endfor %}
