@@ -76,6 +76,7 @@ poudriere:
     - label: b_2019Q1
       branch: branches/2019Q1
       method: svn
+      absent: True
     - label: b_2019Q2
       branch: branches/2019Q2
       method: svn
