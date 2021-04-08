@@ -83,3 +83,6 @@ poudriere:
     - label: b_2019Q3
       branch: branches/2019Q3
       method: svn
+    - label: b_2021Q2
+      branch: 2021Q2
+      method: git
